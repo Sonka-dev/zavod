@@ -1,0 +1,364 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="YP_Demo1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="inn" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="addres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="salesman" Type="Boolean" Nullable="false" />
+    <Property Name="buyer" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Customers" FromRole="Customers" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Manufacture">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="TablePartManufactureMaterials" Relationship="Self.FK_TablePartManufactureMaterials_Manufacture" FromRole="Manufacture" ToRole="TablePartManufactureMaterials" />
+    <NavigationProperty Name="TablePartManufactureProduct" Relationship="Self.FK_TablePartManufactureProduct_Manufacture" FromRole="Manufacture" ToRole="TablePartManufactureProduct" />
+  </EntityType>
+  <EntityType Name="Materials">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Unit" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="PriceMaterial" Relationship="Self.FK_CellsMaterial_Materials" FromRole="Materials" ToRole="PriceMaterial" />
+    <NavigationProperty Name="TablePartManufactureMaterials" Relationship="Self.FK_TablePartManufactureMaterials_Materials" FromRole="Materials" ToRole="TablePartManufactureMaterials" />
+    <NavigationProperty Name="TablePartSpecification" Relationship="Self.FK_TablePartSpecification_Materials" FromRole="Materials" ToRole="TablePartSpecification" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <Property Name="SummDocument" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Customers" Relationship="Self.FK_Orders_Customers" FromRole="Orders" ToRole="Customers" />
+    <NavigationProperty Name="TablePartOrders" Relationship="Self.FK_TablePartOrders_Orders" FromRole="Orders" ToRole="TablePartOrders" />
+  </EntityType>
+  <EntityType Name="PriceMaterial">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idMat" Type="Int32" Nullable="false" />
+    <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <NavigationProperty Name="Materials" Relationship="Self.FK_CellsMaterial_Materials" FromRole="PriceMaterial" ToRole="Materials" />
+  </EntityType>
+  <EntityType Name="PriceProd">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="idProd" Type="Int32" Nullable="false" />
+    <Property Name="price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_CellsProd_Products" FromRole="PriceProd" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Unit" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="PriceProd" Relationship="Self.FK_CellsProd_Products" FromRole="Products" ToRole="PriceProd" />
+    <NavigationProperty Name="Specifications" Relationship="Self.FK_Specifications_Products" FromRole="Products" ToRole="Specifications" />
+    <NavigationProperty Name="TablePartManufactureProduct" Relationship="Self.FK_TablePartManufactureProduct_Products" FromRole="Products" ToRole="TablePartManufactureProduct" />
+    <NavigationProperty Name="TablePartOrders" Relationship="Self.FK_TablePartOrders_Products" FromRole="Products" ToRole="TablePartOrders" />
+  </EntityType>
+  <EntityType Name="Specifications">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ProductionId" Type="Int32" Nullable="false" />
+    <Property Name="Count" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_Specifications_Products" FromRole="Specifications" ToRole="Products" />
+    <NavigationProperty Name="TablePartSpecification" Relationship="Self.FK_TablePartSpecification_Specifications" FromRole="Specifications" ToRole="TablePartSpecification" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="idUser" />
+    </Key>
+    <Property Name="idUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="login" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="post" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="IsBlocked" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TablePartManufactureMaterials">
+    <Key>
+      <PropertyRef Name="ManufactureId" />
+      <PropertyRef Name="MaterialId" />
+      <PropertyRef Name="Count" />
+    </Key>
+    <Property Name="ManufactureId" Type="Int32" Nullable="false" />
+    <Property Name="MaterialId" Type="Int32" Nullable="false" />
+    <Property Name="Count" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Manufacture" Relationship="Self.FK_TablePartManufactureMaterials_Manufacture" FromRole="TablePartManufactureMaterials" ToRole="Manufacture" />
+    <NavigationProperty Name="Materials" Relationship="Self.FK_TablePartManufactureMaterials_Materials" FromRole="TablePartManufactureMaterials" ToRole="Materials" />
+  </EntityType>
+  <EntityType Name="TablePartManufactureProduct">
+    <Key>
+      <PropertyRef Name="ManufactureId" />
+      <PropertyRef Name="ProductId" />
+      <PropertyRef Name="Count" />
+    </Key>
+    <Property Name="ManufactureId" Type="Int32" Nullable="false" />
+    <Property Name="ProductId" Type="Int32" Nullable="false" />
+    <Property Name="Count" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Manufacture" Relationship="Self.FK_TablePartManufactureProduct_Manufacture" FromRole="TablePartManufactureProduct" ToRole="Manufacture" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_TablePartManufactureProduct_Products" FromRole="TablePartManufactureProduct" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="TablePartOrders">
+    <Key>
+      <PropertyRef Name="OrderId" />
+      <PropertyRef Name="ProductionId" />
+      <PropertyRef Name="CellId" />
+    </Key>
+    <Property Name="OrderId" Type="Int32" Nullable="false" />
+    <Property Name="ProductionId" Type="Int32" Nullable="false" />
+    <Property Name="CellId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_TablePartOrders_Orders" FromRole="TablePartOrders" ToRole="Orders" />
+    <NavigationProperty Name="Products" Relationship="Self.FK_TablePartOrders_Products" FromRole="TablePartOrders" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="TablePartSpecification">
+    <Key>
+      <PropertyRef Name="SpecificationId" />
+      <PropertyRef Name="MaterialId" />
+      <PropertyRef Name="Count" />
+    </Key>
+    <Property Name="SpecificationId" Type="Int32" Nullable="false" />
+    <Property Name="MaterialId" Type="Int32" Nullable="false" />
+    <Property Name="Count" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Materials" Relationship="Self.FK_TablePartSpecification_Materials" FromRole="TablePartSpecification" ToRole="Materials" />
+    <NavigationProperty Name="Specifications" Relationship="Self.FK_TablePartSpecification_Specifications" FromRole="TablePartSpecification" ToRole="Specifications" />
+  </EntityType>
+  <Association Name="FK_Orders_Customers">
+    <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TablePartManufactureMaterials_Manufacture">
+    <End Role="Manufacture" Type="Self.Manufacture" Multiplicity="1" />
+    <End Role="TablePartManufactureMaterials" Type="Self.TablePartManufactureMaterials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Manufacture">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TablePartManufactureMaterials">
+        <PropertyRef Name="ManufactureId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TablePartManufactureProduct_Manufacture">
+    <End Role="Manufacture" Type="Self.Manufacture" Multiplicity="1" />
+    <End Role="TablePartManufactureProduct" Type="Self.TablePartManufactureProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Manufacture">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TablePartManufactureProduct">
+        <PropertyRef Name="ManufactureId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CellsMaterial_Materials">
+    <End Role="Materials" Type="Self.Materials" Multiplicity="1" />
+    <End Role="PriceMaterial" Type="Self.PriceMaterial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Materials">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PriceMaterial">
+        <PropertyRef Name="idMat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TablePartManufactureMaterials_Materials">
+    <End Role="Materials" Type="Self.Materials" Multiplicity="1" />
+    <End Role="TablePartManufactureMaterials" Type="Self.TablePartManufactureMaterials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Materials">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TablePartManufactureMaterials">
+        <PropertyRef Name="MaterialId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TablePartSpecification_Materials">
+    <End Role="Materials" Type="Self.Materials" Multiplicity="1" />
+    <End Role="TablePartSpecification" Type="Self.TablePartSpecification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Materials">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TablePartSpecification">
+        <PropertyRef Name="MaterialId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TablePartOrders_Orders">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+    <End Role="TablePartOrders" Type="Self.TablePartOrders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TablePartOrders">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CellsProd_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="PriceProd" Type="Self.PriceProd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PriceProd">
+        <PropertyRef Name="idProd" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Specifications_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="Specifications" Type="Self.Specifications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Specifications">
+        <PropertyRef Name="ProductionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TablePartManufactureProduct_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="TablePartManufactureProduct" Type="Self.TablePartManufactureProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TablePartManufactureProduct">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TablePartOrders_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="TablePartOrders" Type="Self.TablePartOrders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TablePartOrders">
+        <PropertyRef Name="ProductionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TablePartSpecification_Specifications">
+    <End Role="Specifications" Type="Self.Specifications" Multiplicity="1" />
+    <End Role="TablePartSpecification" Type="Self.TablePartSpecification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specifications">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TablePartSpecification">
+        <PropertyRef Name="SpecificationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="YP_Demo1Entities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Customers" EntityType="Self.Customers" />
+    <EntitySet Name="Manufacture" EntityType="Self.Manufacture" />
+    <EntitySet Name="Materials" EntityType="Self.Materials" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" />
+    <EntitySet Name="PriceMaterial" EntityType="Self.PriceMaterial" />
+    <EntitySet Name="PriceProd" EntityType="Self.PriceProd" />
+    <EntitySet Name="Products" EntityType="Self.Products" />
+    <EntitySet Name="Specifications" EntityType="Self.Specifications" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <EntitySet Name="TablePartManufactureMaterials" EntityType="Self.TablePartManufactureMaterials" />
+    <EntitySet Name="TablePartManufactureProduct" EntityType="Self.TablePartManufactureProduct" />
+    <EntitySet Name="TablePartOrders" EntityType="Self.TablePartOrders" />
+    <EntitySet Name="TablePartSpecification" EntityType="Self.TablePartSpecification" />
+    <AssociationSet Name="FK_Orders_Customers" Association="Self.FK_Orders_Customers">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TablePartManufactureMaterials_Manufacture" Association="Self.FK_TablePartManufactureMaterials_Manufacture">
+      <End Role="Manufacture" EntitySet="Manufacture" />
+      <End Role="TablePartManufactureMaterials" EntitySet="TablePartManufactureMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TablePartManufactureProduct_Manufacture" Association="Self.FK_TablePartManufactureProduct_Manufacture">
+      <End Role="Manufacture" EntitySet="Manufacture" />
+      <End Role="TablePartManufactureProduct" EntitySet="TablePartManufactureProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CellsMaterial_Materials" Association="Self.FK_CellsMaterial_Materials">
+      <End Role="Materials" EntitySet="Materials" />
+      <End Role="PriceMaterial" EntitySet="PriceMaterial" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TablePartManufactureMaterials_Materials" Association="Self.FK_TablePartManufactureMaterials_Materials">
+      <End Role="Materials" EntitySet="Materials" />
+      <End Role="TablePartManufactureMaterials" EntitySet="TablePartManufactureMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TablePartSpecification_Materials" Association="Self.FK_TablePartSpecification_Materials">
+      <End Role="Materials" EntitySet="Materials" />
+      <End Role="TablePartSpecification" EntitySet="TablePartSpecification" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TablePartOrders_Orders" Association="Self.FK_TablePartOrders_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="TablePartOrders" EntitySet="TablePartOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CellsProd_Products" Association="Self.FK_CellsProd_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="PriceProd" EntitySet="PriceProd" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Specifications_Products" Association="Self.FK_Specifications_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Specifications" EntitySet="Specifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TablePartManufactureProduct_Products" Association="Self.FK_TablePartManufactureProduct_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="TablePartManufactureProduct" EntitySet="TablePartManufactureProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TablePartOrders_Products" Association="Self.FK_TablePartOrders_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="TablePartOrders" EntitySet="TablePartOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TablePartSpecification_Specifications" Association="Self.FK_TablePartSpecification_Specifications">
+      <End Role="Specifications" EntitySet="Specifications" />
+      <End Role="TablePartSpecification" EntitySet="TablePartSpecification" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

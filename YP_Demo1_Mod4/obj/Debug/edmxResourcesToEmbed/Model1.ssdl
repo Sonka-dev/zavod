@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище YP_Demo1Model" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Customers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="inn" Type="nvarchar" MaxLength="12" Nullable="false" />
+    <Property Name="addres" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="phone" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="salesman" Type="bit" Nullable="false" />
+    <Property Name="buyer" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Manufacture">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Materials">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Unit" Type="nvarchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="CustomerId" Type="int" Nullable="false" />
+    <Property Name="SummDocument" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PriceMaterial">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idMat" Type="int" Nullable="false" />
+    <Property Name="price" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PriceProd">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idProd" Type="int" Nullable="false" />
+    <Property Name="price" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Unit" Type="nvarchar" MaxLength="10" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Specifications">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="ProductionId" Type="int" Nullable="false" />
+    <Property Name="Count" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "YP_Demo1.dbo.TablePartManufactureMaterials" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="TablePartManufactureMaterials">
+    <Key>
+      <PropertyRef Name="ManufactureId" />
+      <PropertyRef Name="MaterialId" />
+      <PropertyRef Name="Count" />
+    </Key>
+    <Property Name="ManufactureId" Type="int" Nullable="false" />
+    <Property Name="MaterialId" Type="int" Nullable="false" />
+    <Property Name="Count" Type="float" Nullable="false" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "YP_Demo1.dbo.TablePartManufactureProduct" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="TablePartManufactureProduct">
+    <Key>
+      <PropertyRef Name="ManufactureId" />
+      <PropertyRef Name="ProductId" />
+      <PropertyRef Name="Count" />
+    </Key>
+    <Property Name="ManufactureId" Type="int" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="Count" Type="float" Nullable="false" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "YP_Demo1.dbo.TablePartOrders" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="TablePartOrders">
+    <Key>
+      <PropertyRef Name="OrderId" />
+      <PropertyRef Name="ProductionId" />
+      <PropertyRef Name="CellId" />
+    </Key>
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="ProductionId" Type="int" Nullable="false" />
+    <Property Name="CellId" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "YP_Demo1.dbo.TablePartSpecification" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+  <EntityType Name="TablePartSpecification">
+    <Key>
+      <PropertyRef Name="SpecificationId" />
+      <PropertyRef Name="MaterialId" />
+      <PropertyRef Name="Count" />
+    </Key>
+    <Property Name="SpecificationId" Type="int" Nullable="false" />
+    <Property Name="MaterialId" Type="int" Nullable="false" />
+    <Property Name="Count" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="idUser" />
+    </Key>
+    <Property Name="idUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="login" Type="nvarchar" MaxLength="20" Nullable="false" />
+    <Property Name="password" Type="nvarchar" MaxLength="11" Nullable="false" />
+    <Property Name="post" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="IsBlocked" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_CellsMaterial_Materials">
+    <End Role="Materials" Type="Self.Materials" Multiplicity="1" />
+    <End Role="PriceMaterial" Type="Self.PriceMaterial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Materials">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PriceMaterial">
+        <PropertyRef Name="idMat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CellsProd_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="PriceProd" Type="Self.PriceProd" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PriceProd">
+        <PropertyRef Name="idProd" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orders_Customers">
+    <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Specifications_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="Specifications" Type="Self.Specifications" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Specifications">
+        <PropertyRef Name="ProductionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TablePartManufactureMaterials_Manufacture">
+    <End Role="Manufacture" Type="Self.Manufacture" Multiplicity="1" />
+    <End Role="TablePartManufactureMaterials" Type="Self.TablePartManufactureMaterials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Manufacture">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TablePartManufactureMaterials">
+        <PropertyRef Name="ManufactureId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TablePartManufactureMaterials_Materials">
+    <End Role="Materials" Type="Self.Materials" Multiplicity="1" />
+    <End Role="TablePartManufactureMaterials" Type="Self.TablePartManufactureMaterials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Materials">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TablePartManufactureMaterials">
+        <PropertyRef Name="MaterialId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TablePartManufactureProduct_Manufacture">
+    <End Role="Manufacture" Type="Self.Manufacture" Multiplicity="1" />
+    <End Role="TablePartManufactureProduct" Type="Self.TablePartManufactureProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Manufacture">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="TablePartManufactureProduct">
+        <PropertyRef Name="ManufactureId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TablePartManufactureProduct_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="TablePartManufactureProduct" Type="Self.TablePartManufactureProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TablePartManufactureProduct">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TablePartOrders_Orders">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+    <End Role="TablePartOrders" Type="Self.TablePartOrders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TablePartOrders">
+        <PropertyRef Name="OrderId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TablePartOrders_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="TablePartOrders" Type="Self.TablePartOrders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TablePartOrders">
+        <PropertyRef Name="ProductionId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TablePartSpecification_Materials">
+    <End Role="Materials" Type="Self.Materials" Multiplicity="1" />
+    <End Role="TablePartSpecification" Type="Self.TablePartSpecification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Materials">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TablePartSpecification">
+        <PropertyRef Name="MaterialId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_TablePartSpecification_Specifications">
+    <End Role="Specifications" Type="Self.Specifications" Multiplicity="1" />
+    <End Role="TablePartSpecification" Type="Self.TablePartSpecification" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Specifications">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TablePartSpecification">
+        <PropertyRef Name="SpecificationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище YP_Demo1ModelContainer">
+    <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Manufacture" EntityType="Self.Manufacture" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PriceMaterial" EntityType="Self.PriceMaterial" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PriceProd" EntityType="Self.PriceProd" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Specifications" EntityType="Self.Specifications" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TablePartManufactureMaterials" EntityType="Self.TablePartManufactureMaterials" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[TablePartManufactureMaterials].[ManufactureId] AS [ManufactureId], 
+[TablePartManufactureMaterials].[MaterialId] AS [MaterialId], 
+[TablePartManufactureMaterials].[Count] AS [Count]
+FROM [dbo].[TablePartManufactureMaterials] AS [TablePartManufactureMaterials]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="TablePartManufactureProduct" EntityType="Self.TablePartManufactureProduct" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[TablePartManufactureProduct].[ManufactureId] AS [ManufactureId], 
+[TablePartManufactureProduct].[ProductId] AS [ProductId], 
+[TablePartManufactureProduct].[Count] AS [Count]
+FROM [dbo].[TablePartManufactureProduct] AS [TablePartManufactureProduct]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="TablePartOrders" EntityType="Self.TablePartOrders" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[TablePartOrders].[OrderId] AS [OrderId], 
+[TablePartOrders].[ProductionId] AS [ProductionId], 
+[TablePartOrders].[CellId] AS [CellId]
+FROM [dbo].[TablePartOrders] AS [TablePartOrders]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="TablePartSpecification" EntityType="Self.TablePartSpecification" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+[TablePartSpecification].[SpecificationId] AS [SpecificationId], 
+[TablePartSpecification].[MaterialId] AS [MaterialId], 
+[TablePartSpecification].[Count] AS [Count]
+FROM [dbo].[TablePartSpecification] AS [TablePartSpecification]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_CellsMaterial_Materials" Association="Self.FK_CellsMaterial_Materials">
+      <End Role="Materials" EntitySet="Materials" />
+      <End Role="PriceMaterial" EntitySet="PriceMaterial" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CellsProd_Products" Association="Self.FK_CellsProd_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="PriceProd" EntitySet="PriceProd" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orders_Customers" Association="Self.FK_Orders_Customers">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Specifications_Products" Association="Self.FK_Specifications_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Specifications" EntitySet="Specifications" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TablePartManufactureMaterials_Manufacture" Association="Self.FK_TablePartManufactureMaterials_Manufacture">
+      <End Role="Manufacture" EntitySet="Manufacture" />
+      <End Role="TablePartManufactureMaterials" EntitySet="TablePartManufactureMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TablePartManufactureMaterials_Materials" Association="Self.FK_TablePartManufactureMaterials_Materials">
+      <End Role="Materials" EntitySet="Materials" />
+      <End Role="TablePartManufactureMaterials" EntitySet="TablePartManufactureMaterials" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TablePartManufactureProduct_Manufacture" Association="Self.FK_TablePartManufactureProduct_Manufacture">
+      <End Role="Manufacture" EntitySet="Manufacture" />
+      <End Role="TablePartManufactureProduct" EntitySet="TablePartManufactureProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TablePartManufactureProduct_Products" Association="Self.FK_TablePartManufactureProduct_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="TablePartManufactureProduct" EntitySet="TablePartManufactureProduct" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TablePartOrders_Orders" Association="Self.FK_TablePartOrders_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="TablePartOrders" EntitySet="TablePartOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TablePartOrders_Products" Association="Self.FK_TablePartOrders_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="TablePartOrders" EntitySet="TablePartOrders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TablePartSpecification_Materials" Association="Self.FK_TablePartSpecification_Materials">
+      <End Role="Materials" EntitySet="Materials" />
+      <End Role="TablePartSpecification" EntitySet="TablePartSpecification" />
+    </AssociationSet>
+    <AssociationSet Name="FK_TablePartSpecification_Specifications" Association="Self.FK_TablePartSpecification_Specifications">
+      <End Role="Specifications" EntitySet="Specifications" />
+      <End Role="TablePartSpecification" EntitySet="TablePartSpecification" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
